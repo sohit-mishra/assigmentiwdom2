@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        h1 {
+            text-align: center;
+            color: #008080;
+            font-size: 36px;
+        }
+
+        .container {
+            width: 280px;
+            padding: 60px 50px;
+            box-shadow: 0px 0px 6px 1px rgb(219, 219, 219);
+            margin: 0 auto;
+        }
+
+        h2 {
+            width: calc(100% - 20px);
+            height: 50px;
+            border: 0;
+            box-shadow: 0px 0px 6px 2px #cccccc;
+            border-radius: 3px;
+            outline: 0;
+            padding: 0 10px;
+            text-align: right;
+            line-height: 50px;
+        }
+
+        .box {
+            margin-top: 20px;
+            display: grid;
+            gap: 10px 5px;
+            grid-template-columns: auto auto auto auto;
+            justify-items: center;
+            font-size: 24px;
+        }
+
+        .box input {
+            box-shadow: 0px 0px 7px 0px #d9d9d9;
+            height: 60px;
+            background: transparent;
+            border: 0;
+            border-radius: 5px;
+            width: 60px;
+            font-size: 18px;
+            font-weight: bolder;
+        }
+
+        input:nth-child(13) {
+            background: red;
+            color: #fff;
+        }
+
+        input:nth-child(4),
+        input:nth-child(8),
+        input:nth-child(12),
+        input:nth-child(15),
+        input:nth-child(16) {
+            background: #000000;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Masai Calculator</h1>
+
+    <div class="container">
+        <h2 id="calvalue"></h2>
+        <div class="box">
+            <input type="button" value="1" class="digit">
+            <input type="button" value="2" class="digit">
+            <input type="button" value="3" class="digit">
+            <input type="button" value="+" class="operator">
+            <input type="button" value="4" class="digit">
+            <input type="button" value="5" class="digit">
+            <input type="button" value="6" class="digit">
+            <input type="button" value="-" class="operator">
+            <input type="button" value="7" class="digit">
+            <input type="button" value="8" class="digit">
+            <input type="button" value="9" class="digit">
+            <input type="button" value="X" class="operator">
+            <input type="button" value="C" onclick="myclear()" />
+            <input type="button" value="0" class="digit">
+            <input type="button" value="=" onclick="sumEqual()">
+            <input type="button" value="/" class="operator">
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+<script>
+    var firstbag = " ";
+    var secondbag = " ";
+    var optbag = " ";
+    var isfirstNumber = true;
+
+    var inputbox = document.getElementById("calvalue");
+
+    var firstNumber = document.querySelectorAll(".digit");
+    for (let i = 0; i < firstNumber.length; i++) {
+        firstNumber[i].addEventListener("click", function () {
+            if (isfirstNumber) {
+                firstbag += firstNumber[i].value;
+                inputbox.innerText = firstbag;
+            } else {
+                inputbox.innerText = "";
+                secondbag += firstNumber[i].value;
+                inputbox.innerText = secondbag;
+            }
+        })
+
+    }
+
+    var operatorsel = document.querySelectorAll(".operator");
+    for (let i = 0; i < operatorsel.length; i++) {
+        operatorsel[i].addEventListener("click", function () {
+            inputbox.innerText = " " + operatorsel[i].value + " ";
+            optbag = operatorsel[i].value;
+            if (isfirstNumber = true) {
+                isfirstNumber = false;
+            } else {
+                isfirstNumber = true;
+            }
+
+        })
+    }
+
+
+    function sumEqual() {
+        isfirstNumber = true;
+        switch (optbag) {
+            case "+":
+                var sum = Number(firstbag) + Number(secondbag);
+                inputbox.innerText = sum;
+                firstbag = "";
+                secondbag = "";
+                break;
+            case "-":
+                var sub = Number(firstbag) - Number(secondbag);
+                inputbox.innerText = sub;
+                firstbag = "";
+                secondbag = "";
+                break;
+            case "X":
+                var mul = Number(firstbag) * Number(secondbag);
+                inputbox.innerText = mul;
+                firstbag = "";
+                secondbag = "";
+                break;
+            case "/":
+                var divide = Number(firstbag) / Number(secondbag);
+                inputbox.innerText = divide;
+                firstbag = "";
+                secondbag = "";
+                break;
+            default:
+                alert("Something is wrong");
+        }
+    }
+
+    function myclear() {
+        inputbox.innerText = "";
+        firstbag = "";
+        secondbag = "";
+        optbag = "";
+    }
+
+</script>
